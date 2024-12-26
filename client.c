@@ -6,10 +6,11 @@
 /*   By: mprunty <mprunty@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 17:02:48 by mprunty           #+#    #+#             */
-/*   Updated: 2024/12/26 21:33:54 by mprunty          ###   ########.fr       */
+/*   Updated: 2024/12/26 23:33:01 by mprunty          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minitalk.h"
+
 int	g_sigrecived = 0;
 
 /**
@@ -52,7 +53,7 @@ void	send_char(pid_t server_pid, char c)
 	}
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	pid_t	server_pid;
 	char	*str;
@@ -61,12 +62,10 @@ int main(int ac, char **av)
 	{
 		str = ft_strdup(av[2]);
 		server_pid = ft_atoi(*(++av));
-		//ft_printf("pid:%i, str:%s \n", server_pid, str);
 		signal(SIGUSR2, signal_response);
 		while (*str)
 		{
-			send_char(server_pid, *str);
-			str++;
+			send_char(server_pid, *str++);
 		}
 	}
 	else
@@ -74,4 +73,3 @@ int main(int ac, char **av)
 		ft_printf("Usage: ./client [server_pid] [message]\n");
 	}
 }
-
