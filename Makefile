@@ -40,7 +40,7 @@ endef
 #                                COMPILATION                                   #
 ################################################################################
 
-all: libft banner server client
+all: check-and-reinit-submodules libft banner server client
 	@printf "\n$(GREEN)✨ Project compiled successfully!$(CLR_RMV)\n"
 	@printf "$(PURPLE)▶ Run $(BOLD)./server$(CLR_RMV) to start the server\n"
 	@printf	"$(PURPLE)▶ $(BOLD)Run ./client PID STR $(CLR_RMV) to start the client\n"
@@ -73,6 +73,11 @@ libft:
 	@make -C $(LFT)
 	@printf "$(GREEN)✓ Libft ready!$(CLR_RMV)\n"
 
+check-and-reinit-submodules:
+	@if git submodule status | egrep -q '^[-+]'; then \
+		echo "INFO: Need to reinitialize git submodules"; \
+		git submodule update --init; \
+    fi
 
 clean:
 	@printf "$(RED)🧹 Cleaning object files...$(CLR_RMV)\n"
