@@ -44,7 +44,7 @@ all: check-and-reinit-submodules libft banner server client
 	@printf "\n$(GREEN)✨ Project compiled successfully!$(CLR_RMV)\n"
 	@printf "$(PURPLE)▶ Run $(BOLD)./server$(CLR_RMV) to start the server\n"
 	@printf	"$(PURPLE)▶ $(BOLD)Run ./client PID STR $(CLR_RMV) to start the client\n"
-	@printf 'use $(GREEN)./client $$(pgrep server) $$(read -p "Input: " str && echo $$str)$(CLR_RMV) to run dynamically\n'
+	@printf 'use $(GREEN)./client $$(pgrep -n server) $$(read -p "Input: " str && echo $$str)$(CLR_RMV) to run dynamically\n'
 
 banner:
 	@printf "%b" "$(CYAN)"
