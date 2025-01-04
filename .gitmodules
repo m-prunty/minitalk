@@ -1,4 +1,4 @@
 [submodule "libft"]
 	path = libft
-	url = git@github.com:/m-prunty/libft.git
+	url = https://github.com:/m-prunty/libft.git
 	branch = master
