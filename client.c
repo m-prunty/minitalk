@@ -6,7 +6,7 @@
 /*   By: mprunty <mprunty@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 17:02:48 by mprunty           #+#    #+#             */
-/*   Updated: 2025/01/04 12:03:19 by mprunty          ###   ########.fr       */
+/*   Updated: 2025/01/07 18:48:10 by mprunty          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minitalk.h"
@@ -39,7 +39,6 @@ void	send_char(pid_t server_pid, char c)
 	int	i;
 
 	i = 0;
-	printf("Sending: %c\n", c);
 	while (i < 8)
 	{
 		if ((c >> i) & 1)
