@@ -6,7 +6,7 @@
 /*   By: mprunty <mprunty@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 17:02:48 by mprunty           #+#    #+#             */
-/*   Updated: 2025/01/07 18:48:10 by mprunty          ###   ########.fr       */
+/*   Updated: 2026/05/25 17:50:34 by maprunty         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minitalk.h"
@@ -18,7 +18,7 @@ int	g_sigrecived = 0;
  *
  * @param signum 
  */
-void	signal_response(int signum)
+void signal_response(int signum)
 {
 	if (signum == SIGUSR2)
 		g_sigrecived = 1;
@@ -34,42 +34,39 @@ void	signal_response(int signum)
  * @param server_pid 
  * @param c 
  */
-void	send_char(pid_t server_pid, char c)
+void send_char(pid_t server_pid, char c)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (i < 8)
 	{
+
 		if ((c >> i) & 1)
 			kill(server_pid, SIGUSR1);
 		else
 			kill(server_pid, SIGUSR2);
+		
 		i++;
-		(usleep(500));
 		while (!g_sigrecived)
-			;
+			pause();
 		g_sigrecived = 0;
+
 	}
 }
 
-int	main(int ac, char **av)
+int main(int ac, char **av)
 {
-	pid_t	server_pid;
-	char	*str;
+	pid_t server_pid;
 
 	if (ac == 3 && ft_isnumi(av[1]))
 	{
-		str = ft_strdup(av[2]);
-		server_pid = ft_atoi(*(++av));
+		server_pid = ft_atoi(av[1]);
+
+		signal(SIGUSR1, signal_response);
 		signal(SIGUSR2, signal_response);
-		while (*str)
-		{
-			send_char(server_pid, *str++);
-		}
-	}
-	else
-	{
-		ft_printf("Usage: ./client [server_pid] [message]\n");
+
+		while (*av[2])
+			send_char(server_pid, *av[2]++);
 	}
 }
